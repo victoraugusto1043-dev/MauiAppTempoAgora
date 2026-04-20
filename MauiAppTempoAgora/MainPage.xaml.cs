@@ -1,5 +1,6 @@
 ﻿using MauiAppTempoAgora.Models;
 using MauiAppTempoAgora.Services;
+using Microsoft.Maui.Networking;
 
 
 
@@ -36,12 +37,17 @@ namespace MauiAppTempoAgora
                     }
                     else
                     {
-                        lbl_res.Text = "Sem dados de Previsão";
+                        lbl_res.Text = "Cidade não encontrada";
                     }
                 }
                 else
                 {
                     lbl_res.Text = "Preencha a Cidade";
+                }
+                if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await DisplayAlert("Sem internet", "Verifique sua conexão.", "OK");
+                    return;
                 }
             }
             catch (Exception ex)
